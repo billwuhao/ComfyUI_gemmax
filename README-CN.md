@@ -1,27 +1,27 @@
 [中文](README-CN.md)|[English](README.md)
 
-# ComfyUI Nodes for Xiaomi GemmaX: Multi-language translation based on Gemma, supporting 28 languages.
+# 小米 GemmaX 的 ComfyUI 节点: 基于 Gemma 多语言翻译, 支持 28 种语言. 
 
 ![](https://github.com/billwuhao/ComfyUI_gemmax/blob/main/images/2025-03-23_07-12-01.png)
 
-## 📣 Updates
+## 📣 更新
 
-[2025-03-23]⚒️: Released version v1.0.0.
+[2025-03-23]⚒️: 发布版本 v1.0.0. 
 
-## Installation
+## 安装
 
 ```
 cd ComfyUI/custom_nodes
 git clone https://github.com/billwuhao/ComfyUI_gemmax.git
 ```
 
-## Model Download
+## 模型下载
 
-Choose one of the following models and download it to the `ComfyUI/models/TTS` directory.
+将下列模型人选其一, 下载放到 `ComfyUI/models/TTS` 目录下.
 
 [GemmaX2-28-2B-v0.1](https://huggingface.co/ModelSpace/GemmaX2-28-2B-v0.1) 
 [GemmaX2-28-9B-v0.1](https://huggingface.co/ModelSpace/GemmaX2-28-9B-v0.1)
 
-## Acknowledgements
+## 鸣谢
 
 [gemmax](https://github.com/xiaomi-research/gemmax)

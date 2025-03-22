@@ -1,0 +1,15 @@
+[project]
+name = "gemmax-mw"
+description = "XiaoMi GemmaX: Support 28 languages, Multilingual Translator based on Gemma. A node for ComfyUI."
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/billwuhao/ComfyUI_gemmax"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "mw"
+DisplayName = "MW-ComfyUI_gemmax"
+Icon = ""

@@ -4,6 +4,8 @@
 
 ![](https://github.com/billwuhao/ComfyUI_gemmax/blob/main/images/2025-03-23_07-12-01.png)
 
+Supports 28 languages: Arabic, Bengali, Czech, German, English, Spanish, Persian, French, Hebrew, Hindi, Indonesian, Italian, Japanese, Khmer, Korean, Lao, Malay, Burmese, Dutch, Polish, Portuguese, Russian, Thai, Tagalog, Turkish, Urdu, Vietnamese, Chinese.
+
 ## 📣 Updates
 
 [2025-03-23]⚒️: Released version v1.0.0.

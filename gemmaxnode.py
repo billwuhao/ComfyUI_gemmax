@@ -48,7 +48,7 @@ class GemmaxRun:
         outputs = model.generate(**inputs, max_new_tokens=max_new_tokens)
         translations = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-        translations = translations.split(f"\n\n{target_language}:")[-1]
+        translations = translations.split(f"\n\n{target_language}:")[-1].strip('"“”[] ')
         
         if unload_model:
             import gc

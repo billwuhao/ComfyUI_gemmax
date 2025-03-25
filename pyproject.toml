@@ -1,7 +1,7 @@
 [project]
 name = "gemmax-mw"
 description = "XiaoMi GemmaX: Support 28 languages, Multilingual Translator based on Gemma. A node for ComfyUI."
-version = "1.0.0"
+version = "1.0.1"
 license = {file = "LICENSE"}
 dependencies = []
 

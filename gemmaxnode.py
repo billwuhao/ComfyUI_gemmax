@@ -30,7 +30,7 @@ class GemmaxRun:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("translations",)
     FUNCTION = "translate"
-    CATEGORY = "MW/MW-gemmax"
+    CATEGORY = "🎤MW/MW-gemmax"
     def translate(self, model, source_language, target_language, text, max_new_tokens, unload_model):
         model_id = model_path + "/" + model
         if self.model_cache is None:

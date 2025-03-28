@@ -2,6 +2,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import folder_paths
 import os
 import torch
+import gc
 
 models_dir = folder_paths.models_dir
 model_path = os.path.join(models_dir, "TTS")
@@ -36,24 +37,24 @@ class GemmaxRun:
         if self.model_cache is None:
             model = AutoModelForCausalLM.from_pretrained(model_id).eval().to(self.device)
             tokenizer = AutoTokenizer.from_pretrained(model_id)
-            self.tokenizer = tokenizer
-            self.model_cache = model
-        else:
-            model = self.model_cache
-            tokenizer = self.tokenizer
+            GemmaxRun.tokenizer = tokenizer
+            GemmaxRun.model_cache = model
+            del model
+            del tokenizer
+            gc.collect()
+            torch.cuda.empty_cache()
 
         text = "将文本从{}翻译成{}：\n\n{}:{}\n\n{}:".format(source_language, target_language, source_language, text, target_language)
 
-        inputs = tokenizer(text, return_tensors="pt").to(self.device)
-        outputs = model.generate(**inputs, max_new_tokens=max_new_tokens)
-        translations = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        inputs = self.tokenizer(text, return_tensors="pt").to(self.device)
+        outputs = self.model_cache.generate(**inputs, max_new_tokens=max_new_tokens)
+        translations = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
         translations = translations.split(f"\n\n{target_language}:")[-1].strip('"“”[] ')
         
         if unload_model:
-            import gc
-            self.tokenizer = None
-            self.model_cache = None
+            GemmaxRun.tokenizer = None
+            GemmaxRun.model_cache = None
             gc.collect()
             torch.cuda.empty_cache()
 

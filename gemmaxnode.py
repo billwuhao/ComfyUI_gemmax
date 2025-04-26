@@ -24,7 +24,7 @@ class GemmaxRun:
                 "model":(["GemmaX2-28-2B-v0.1", "GemmaX2-28-9B-v0.1"],{"default": "GemmaX2-28-2B-v0.1"}),
                 "source_language": (LANGUAGES, {"default": "English"}),
                 "target_language": (LANGUAGES, {"default": "中文"}),
-                "text": ("STRING",),
+                "text": ("STRING", {"forceInput": True}),
                 "max_new_tokens": ("INT", {"default": 200, "min": 1,}),
                 "unload_model": ("BOOLEAN", {"default": True}),
             },

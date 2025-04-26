@@ -4,6 +4,7 @@ import os
 import torch
 import gc
 
+
 models_dir = folder_paths.models_dir
 model_path = os.path.join(models_dir, "TTS")
 
@@ -12,9 +13,10 @@ LANGUAGES = ["Arabic", "Bengali", "Czech", "German", "English", "Spanish", "Pers
              "Portuguese", "Russian", "Thai", "Tagalog", "Turkish", "Urdu", "Vietnamese", "中文"]
 
 class GemmaxRun:
-    tokenizer = None
-    model_cache = None
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    def __init__(self):
+        self.model_cache = None
+        self.tokenizer = None
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -24,7 +26,7 @@ class GemmaxRun:
                 "target_language": (LANGUAGES, {"default": "中文"}),
                 "text": ("STRING",),
                 "max_new_tokens": ("INT", {"default": 200, "min": 1,}),
-                "unload_model": ("BOOLEAN", {"default": False}),
+                "unload_model": ("BOOLEAN", {"default": True}),
             },
         }
 
@@ -34,15 +36,10 @@ class GemmaxRun:
     CATEGORY = "🎤MW/MW-gemmax"
     def translate(self, model, source_language, target_language, text, max_new_tokens, unload_model):
         model_id = model_path + "/" + model
+        
         if self.model_cache is None:
-            model = AutoModelForCausalLM.from_pretrained(model_id).eval().to(self.device)
-            tokenizer = AutoTokenizer.from_pretrained(model_id)
-            GemmaxRun.tokenizer = tokenizer
-            GemmaxRun.model_cache = model
-            del model
-            del tokenizer
-            gc.collect()
-            torch.cuda.empty_cache()
+            self.model_cache = AutoModelForCausalLM.from_pretrained(model_id).eval().to(self.device)
+            self.tokenizer = AutoTokenizer.from_pretrained(model_id)
 
         text = "将文本从{}翻译成{}：\n\n{}:{}\n\n{}:".format(source_language, target_language, source_language, text, target_language)
 
@@ -53,8 +50,8 @@ class GemmaxRun:
         translations = translations.split(f"\n\n{target_language}:")[-1].strip('"“”[] ')
         
         if unload_model:
-            GemmaxRun.tokenizer = None
-            GemmaxRun.model_cache = None
+            self.tokenizer = None
+            self.model_cache = None
             gc.collect()
             torch.cuda.empty_cache()
 

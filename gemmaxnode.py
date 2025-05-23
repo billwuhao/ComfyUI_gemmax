@@ -12,10 +12,10 @@ LANGUAGES = ["Arabic", "Bengali", "Czech", "German", "English", "Spanish", "Pers
              "Indonesian", "Italian", "Japanese", "Khmer", "Korean", "Lao", "Malay", "Burmese", "Dutch", "Polish", 
              "Portuguese", "Russian", "Thai", "Tagalog", "Turkish", "Urdu", "Vietnamese", "中文"]
 
+MODEL_CACHE = None
+TOKENIZER = None
 class GemmaxRun:
     def __init__(self):
-        self.model_cache = None
-        self.tokenizer = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
     @classmethod
     def INPUT_TYPES(s):
@@ -36,22 +36,22 @@ class GemmaxRun:
     CATEGORY = "🎤MW/MW-gemmax"
     def translate(self, model, source_language, target_language, text, max_new_tokens, unload_model):
         model_id = model_path + "/" + model
-        
-        if self.model_cache is None:
-            self.model_cache = AutoModelForCausalLM.from_pretrained(model_id).eval().to(self.device)
-            self.tokenizer = AutoTokenizer.from_pretrained(model_id)
+        global MODEL_CACHE, TOKENIZER
+        if MODEL_CACHE is None:
+            MODEL_CACHE = AutoModelForCausalLM.from_pretrained(model_id).eval().to(self.device)
+            TOKENIZER = AutoTokenizer.from_pretrained(model_id)
 
         text = "将文本从{}翻译成{}：\n\n{}:{}\n\n{}:".format(source_language, target_language, source_language, text, target_language)
 
-        inputs = self.tokenizer(text, return_tensors="pt").to(self.device)
-        outputs = self.model_cache.generate(**inputs, max_new_tokens=max_new_tokens)
-        translations = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
+        inputs = TOKENIZER(text, return_tensors="pt").to(self.device)
+        outputs = MODEL_CACHE.generate(**inputs, max_new_tokens=max_new_tokens)
+        translations = TOKENIZER.decode(outputs[0], skip_special_tokens=True)
 
         translations = translations.split(f"\n\n{target_language}:")[-1].strip('"“”[] ')
         
         if unload_model:
-            self.tokenizer = None
-            self.model_cache = None
+            TOKENIZER = None
+            MODEL_CACHE = None
             gc.collect()
             torch.cuda.empty_cache()
 

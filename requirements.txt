@@ -1,0 +1,10 @@
+blingfire
+brand-yml
+ctranslate2
+faicons
+fire
+libsass
+pydantic
+sacrebleu
+sentencepiece
+shiny

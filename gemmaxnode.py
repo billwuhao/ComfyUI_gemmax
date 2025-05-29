@@ -21,7 +21,7 @@ class GemmaxRun:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "model":(["GemmaX2-28-2B-v0.1", "GemmaX2-28-9B-v0.1"],{"default": "GemmaX2-28-2B-v0.1"}),
+                "model":(["GemmaX2-28-2B-v0.1", "GemmaX2-28-9B-v0.1", "GemmaX2-28-2B-4bit", "GemmaX2-28-2B-8bit"],{"default": "GemmaX2-28-2B-4bit"}),
                 "source_language": (LANGUAGES, {"default": "English"}),
                 "target_language": (LANGUAGES, {"default": "中文"}),
                 "text": ("STRING", {"forceInput": True}),
@@ -56,12 +56,3 @@ class GemmaxRun:
             torch.cuda.empty_cache()
 
         return (translations,)
-
-
-NODE_CLASS_MAPPINGS = {
-    "GemmaxRun": GemmaxRun,
-}
-
-NODE_DISPLAY_NAME_MAPPINGS = {
-    "GemmaxRun": "Gemmax Run",
-}

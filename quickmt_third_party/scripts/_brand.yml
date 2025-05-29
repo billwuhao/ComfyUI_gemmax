@@ -1,0 +1,33 @@
+meta:
+  name:
+    full: "QuickMT Brand"
+    short: "QuickMT"
+  link:
+    home: https://huggingface.co/quickmt
+    github: https://github.com/quickmt
+
+color:
+  palette:
+    cyan: "#17A2B8"
+    green: "#28A745"
+    yellow: "#FFD700"
+    orange: "#FF7F50"
+    red: "#FF3333"
+    black: "#1A1A1A"
+    white: "#F8F8F8"
+  foreground: black
+  primary: cyan
+  success: green
+  info: orange
+  warning: yellow
+  danger: red
+  light: white
+  dark: black
+typography:
+  fonts:
+    - family: Open Sans
+      source: bunny
+    - family: Source Code Pro
+      source: bunny
+  base: Open Sans
+  monospace: Source Code Pro

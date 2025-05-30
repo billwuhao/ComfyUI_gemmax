@@ -14,6 +14,7 @@ MODEL_CACHE = None
 class QuickMTRun:
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model_name = None
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -40,7 +41,8 @@ class QuickMTRun:
         texts = [i.strip() for i in re.split(r'\n\s*\n', text.strip()) if i.strip()]
 
         global MODEL_CACHE
-        if MODEL_CACHE is None:
+        if MODEL_CACHE is None or self.model_name != model_id:
+            self.model_name = model_id
             MODEL_CACHE = Translator(model_id, device=self.device)
             
         outputs = MODEL_CACHE(

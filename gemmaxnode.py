@@ -17,6 +17,7 @@ TOKENIZER = None
 class GemmaxRun:
     def __init__(self):
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.model_name = None
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -37,7 +38,8 @@ class GemmaxRun:
     def translate(self, model, source_language, target_language, text, max_new_tokens, unload_model):
         model_id = model_path + "/" + model
         global MODEL_CACHE, TOKENIZER
-        if MODEL_CACHE is None:
+        if MODEL_CACHE is None or self.model_name != model_id:
+            self.model_name = model_id
             MODEL_CACHE = AutoModelForCausalLM.from_pretrained(model_id).eval().to(self.device)
             TOKENIZER = AutoTokenizer.from_pretrained(model_id)
 
